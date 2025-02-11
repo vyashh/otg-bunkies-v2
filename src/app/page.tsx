@@ -1,7 +1,11 @@
 import Image from "next/image";
 import styles from "./page.module.css";
 
+import schedule from "./utils/schedule";
+
 export default function Home() {
+  schedule();
+
   return (
     <div className={styles.page}>
       <main className={styles.main}>
