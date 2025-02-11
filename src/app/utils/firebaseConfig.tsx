@@ -1,4 +1,5 @@
-import { initializeApp } from "firebase/app";
+import { initializeApp, getApp, getApps } from "firebase/app";
+import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore/lite";
 // Follow this pattern to import other Firebase services
 // import { } from 'firebase/<service>';
@@ -14,7 +15,9 @@ const firebaseConfig = {
   measurementId: process.env.FIREBASE_MEASUREMENT_ID,
 };
 
-const app = initializeApp(firebaseConfig);
+const app = !getApps.length ? initializeApp(firebaseConfig) : getApp();
 const db = getFirestore(app);
 
-export default db;
+const auth = getAuth(app);
+
+export { app, auth, db };
