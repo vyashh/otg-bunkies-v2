@@ -12,6 +12,8 @@ export default async function Home() {
     serviceAccount: serverConfig.serviceAccount,
   });
 
+  console.log(tokens?.decodedToken.uid);
+
   if (!tokens) {
     notFound();
   }
