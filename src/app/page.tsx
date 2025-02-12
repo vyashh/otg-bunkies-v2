@@ -1,32 +1,20 @@
-"use client";
+import { getTokens } from "next-firebase-auth-edge";
+import { cookies } from "next/headers";
+import { notFound } from "next/navigation";
+import { clientConfig, serverConfig } from "../config";
+import HomePage from "./homepage/page";
 
-import { useAuthState } from "react-firebase-hooks/auth";
-import { auth } from "@/app/utils/firebaseConfig";
-import { useRouter } from "next/navigation";
-import { signOut } from "firebase/auth";
+export default async function Home() {
+  const tokens = await getTokens(await cookies(), {
+    apiKey: clientConfig.apiKey,
+    cookieName: serverConfig.cookieName,
+    cookieSignatureKeys: serverConfig.cookieSignatureKeys,
+    serviceAccount: serverConfig.serviceAccount,
+  });
 
-export default function Home() {
-  const [user] = useAuthState(auth);
-  const router = useRouter();
-  const userSession = sessionStorage.getItem("user");
-
-  console.log({ user });
-
-  if (!user && !userSession) {
-    return router.push("register");
+  if (!tokens) {
+    notFound();
   }
 
-  return (
-    <>
-      {" "}
-      <button
-        onClick={() => {
-          signOut(auth);
-          sessionStorage.removeItem("user");
-        }}
-      >
-        Log out
-      </button>
-    </>
-  );
+  return <HomePage email={tokens?.decodedToken.email} />;
 }
