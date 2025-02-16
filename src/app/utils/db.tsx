@@ -47,3 +47,7 @@ export const getUserProfile = async (userId: string) => {
   //     return null;
   //   }
 };
+
+export const getHouseData = async (userId: string) => {
+  console.log(userId);
+};
