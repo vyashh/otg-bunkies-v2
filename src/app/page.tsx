@@ -12,11 +12,14 @@ export default async function Home() {
     serviceAccount: serverConfig.serviceAccount,
   });
 
-  console.log(tokens?.decodedToken.uid);
-
   if (!tokens) {
     notFound();
   }
 
-  return <HomePage email={tokens?.decodedToken.email} />;
+  return (
+    <HomePage
+      email={tokens?.decodedToken.email}
+      userId={tokens?.decodedToken.uid}
+    />
+  );
 }

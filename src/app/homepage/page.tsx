@@ -3,14 +3,19 @@
 import { useRouter } from "next/navigation";
 import { getAuth, signOut } from "firebase/auth";
 import { app } from "../../firebase";
+import { getUserProfile } from "../utils/db";
 
 interface HomePageProps {
   email?: string;
+  userId?: string;
 }
 
-export default function HomePage({ email }: HomePageProps) {
+export default async function HomePage({ email, userId }: HomePageProps) {
   const router = useRouter();
 
+  //   const userData = await getUserProfile(userId!);
+
+  //   console.log(userData);
   async function handleLogout() {
     await signOut(getAuth(app));
 

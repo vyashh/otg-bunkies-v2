@@ -1,3 +1,5 @@
+import { app, db } from "../../firebase";
+import { doc, getDoc } from "firebase/firestore";
 // export default const schedule = () => {
 //   let people = ["Shi", "Vy", "Tjeerd", "Vera", "Kamil"];
 
@@ -33,3 +35,15 @@
 //   console.log(getScheduleForWeek(2026, 1)); // Eve joins
 //   // console.log(getScheduleForWeek(2028, 1)); // Eve joins
 // };
+
+export const getUserProfile = async (userId: string) => {
+  //   console.log("getUserProfile() called");
+  //   const docRef = doc(db, "users", userId!);
+  //   const docSnap = await getDoc(docRef);
+  //   if (docSnap.exists()) {
+  //     return docSnap.data();
+  //   } else {
+  //     // docSnap.data() will be undefined in this case
+  //     return null;
+  //   }
+};
