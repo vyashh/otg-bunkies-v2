@@ -18,12 +18,20 @@ export default function HomePage({ userId }: HomePageProps) {
   const [showOptions, setShowOptions] = useState<boolean>(true);
   const [showJoinMenu, setShowJoinMenu] = useState<boolean>(false);
   const [showCreateMenu, setShowCreateMenu] = useState<boolean>(false);
+  const [houseName, setHouseName] = useState<string | null>(null);
+  const [showCreateTasksMenu, setShowCreateTasksMenu] =
+    useState<boolean>(false);
 
   const handleOptions = (chosenOption: string) => {
     chosenOption == "join" && setShowJoinMenu(true);
     chosenOption == "create" && setShowCreateMenu(true);
     setShowOptions(false);
     console.log(chosenOption);
+  };
+
+  const handleCreateOptions = (chosenOption: string) => {
+    chosenOption == "continue create tasks" && setShowCreateTasksMenu(true);
+    setShowCreateMenu(false);
   };
 
   useEffect(() => {}, []);
@@ -42,11 +50,26 @@ export default function HomePage({ userId }: HomePageProps) {
       {showJoinMenu && (
         <>
           <h2>Join</h2>
+          <input placeholder="Enter a housecode"></input>
+          <p>You can ask the current house admin for the code.</p>
+          <button>Continue</button>
         </>
       )}
       {showCreateMenu && (
         <>
           <h2>Create</h2>
+          <input
+            placeholder="House name"
+            onChange={(e: any) => setHouseName(e.target.value)}
+          ></input>
+          <button onClick={() => handleCreateOptions("continue create tasks")}>
+            Continue
+          </button>
+        </>
+      )}
+      {showCreateTasksMenu && (
+        <>
+          <h2>Create Tasks</h2>
         </>
       )}
     </main>
