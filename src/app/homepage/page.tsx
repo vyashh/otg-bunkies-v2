@@ -20,18 +20,11 @@ export default function HomePage({ email, userId }: HomePageProps) {
 
   const getSnapshot = async () => {
     try {
-      const q = query(
-        collection(db, "houses"),
-        where("members", "array-contains", userId)
-      );
-      const querySnapshot = await getDocs(q);
+      const data = await getHouseData(userId!);
 
-      if (!querySnapshot.empty) {
-        const houseDoc = querySnapshot.docs[0]; // Get only the first document
-        setData({
-          id: houseDoc.id,
-          ...houseDoc.data(),
-        });
+      if (data) {
+        // const houseDoc = querySnapshot.docs[0]; // Get only the first document
+        setData(data);
       } else {
         setData(null); // No house found
       }

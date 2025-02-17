@@ -1,5 +1,6 @@
 import { app, db } from "../../firebase";
 import { doc, getDoc } from "firebase/firestore";
+import { collection, query, where, getDocs } from "firebase/firestore";
 // export default const schedule = () => {
 //   let people = ["Shi", "Vy", "Tjeerd", "Vera", "Kamil"];
 
@@ -49,5 +50,19 @@ export const getUserProfile = async (userId: string) => {
 };
 
 export const getHouseData = async (userId: string) => {
-  console.log(userId);
+  const q = query(
+    collection(db, "houses"),
+    where("members", "array-contains", userId)
+  );
+  const querySnapshot = await getDocs(q);
+
+  if (!querySnapshot.empty) {
+    const houseDoc = querySnapshot.docs[0]; // Get only the first document
+    return {
+      id: houseDoc.id,
+      ...houseDoc.data(),
+    };
+  } else {
+    return null; // No house found
+  }
 };
