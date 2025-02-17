@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { getAuth, signOut } from "firebase/auth";
 import { app, db } from "../../firebase";
 import { getHouseData } from "../utils/db";
@@ -49,7 +49,7 @@ export default function HomePage({ email, userId }: HomePageProps) {
   }, [userId]);
 
   if (isLoading) return <p>Loading...</p>;
-  if (!data) return <p>No profile data</p>;
+  if (!data) redirect("/onboarding");
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center p-24">
