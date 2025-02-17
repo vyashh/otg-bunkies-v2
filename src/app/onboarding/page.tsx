@@ -15,23 +15,40 @@ export default function HomePage({ userId }: HomePageProps) {
   const [data, setData] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [showOptions, setShowOptions] = useState<boolean>(true);
+  const [showJoinMenu, setShowJoinMenu] = useState<boolean>(false);
+  const [showCreateMenu, setShowCreateMenu] = useState<boolean>(false);
 
-  async function handleLogout() {
-    await signOut(getAuth(app));
-
-    await fetch("/api/logout");
-
-    router.push("/login");
-  }
+  const handleOptions = (chosenOption: string) => {
+    chosenOption == "join" && setShowJoinMenu(true);
+    chosenOption == "create" && setShowCreateMenu(true);
+    setShowOptions(false);
+    console.log(chosenOption);
+  };
 
   useEffect(() => {}, []);
 
   if (isLoading) return <p>Loading...</p>;
-  if (!data) return <p>No profile data</p>;
 
   return (
     <main>
-      <h1>onboarding</h1>
+      <h1>Onboarding</h1>
+      {showOptions && (
+        <>
+          <button onClick={() => handleOptions("join")}>Join House</button>
+          <button onClick={() => handleOptions("create")}>Create House</button>
+        </>
+      )}
+      {showJoinMenu && (
+        <>
+          <h2>Join</h2>
+        </>
+      )}
+      {showCreateMenu && (
+        <>
+          <h2>Create</h2>
+        </>
+      )}
     </main>
   );
 }
