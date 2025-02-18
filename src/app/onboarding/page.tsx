@@ -21,6 +21,8 @@ export default function HomePage({ userId }: HomePageProps) {
   const [houseName, setHouseName] = useState<string | null>(null);
   const [showCreateTasksMenu, setShowCreateTasksMenu] =
     useState<boolean>(false);
+  const [task, setTask] = useState<string>(""); // single task before adding them to the array
+  const [tasks, setTasks] = useState<string[] | null>([""]);
 
   const handleOptions = (chosenOption: string) => {
     chosenOption == "join" && setShowJoinMenu(true);
@@ -29,9 +31,21 @@ export default function HomePage({ userId }: HomePageProps) {
     console.log(chosenOption);
   };
 
-  const handleCreateOptions = (chosenOption: string) => {
-    chosenOption == "continue create tasks" && setShowCreateTasksMenu(true);
-    setShowCreateMenu(false);
+  const handleCreateOptions = (chosenOption: string, e?: any) => {
+    switch (chosenOption) {
+      case "continue create tasks":
+        setShowCreateTasksMenu(true);
+        setShowCreateMenu(false);
+        break;
+      case "add task":
+        setTasks([...tasks!, task!]);
+        setTask("");
+
+        break;
+
+      default:
+        break;
+    }
   };
 
   useEffect(() => {}, []);
@@ -70,6 +84,16 @@ export default function HomePage({ userId }: HomePageProps) {
       {showCreateTasksMenu && (
         <>
           <h2>Create Tasks</h2>
+          <p>{houseName}</p>
+          <h2>Tasks</h2>
+          <p>{tasks}</p>
+          <input
+            placeholder="Task name"
+            value={task!}
+            onChange={(e: any) => setTask(e.target.value)}
+          />
+          <button onClick={() => handleCreateOptions("add task")}>Add</button>
+          <button>Finish</button>
         </>
       )}
     </main>
