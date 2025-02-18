@@ -44,9 +44,10 @@ export default function HomePage({ userId }: HomePageProps) {
       case "finish":
         setIsLoading(true);
         try {
-          createHouse(userId!, houseName!, tasks!).then((data) =>
-            console.log(userId)
-          );
+          createHouse(userId!, houseName!, tasks!).then(() => {
+            setIsLoading(false);
+            router.push("/");
+          });
         } catch (error) {
           console.log(error);
         }
@@ -56,9 +57,7 @@ export default function HomePage({ userId }: HomePageProps) {
     }
   };
 
-  useEffect(() => {
-    console.log(userId);
-  }, []);
+  useEffect(() => {}, []);
 
   if (isLoading) return <p>Loading...</p>;
 

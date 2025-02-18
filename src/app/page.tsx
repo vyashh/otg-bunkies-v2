@@ -13,10 +13,11 @@ export default async function Home() {
     cookieSignatureKeys: serverConfig.cookieSignatureKeys,
     serviceAccount: serverConfig.serviceAccount,
   });
-  const data: any = null;
+
+  let data: any = null;
 
   try {
-    const data = await getHouseData(tokens?.decodedToken.uid!);
+    data = await getHouseData(tokens?.decodedToken.uid!);
   } catch (err) {
     console.error("Error fetching data:", err);
   } finally {
