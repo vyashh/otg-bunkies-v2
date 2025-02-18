@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { getAuth, signOut } from "firebase/auth";
 import { app, db } from "../../firebase";
-import { getHouseData } from "../utils/db";
+import { createHouse, getHouseData } from "../utils/db";
 import { useState, useEffect } from "react";
 
 interface HomePageProps {
@@ -40,15 +40,25 @@ export default function HomePage({ userId }: HomePageProps) {
       case "add task":
         setTasks([...tasks!, task!]);
         setTask("");
-
         break;
-
+      case "finish":
+        setIsLoading(true);
+        try {
+          createHouse(userId!, houseName!, tasks!).then((data) =>
+            console.log(userId)
+          );
+        } catch (error) {
+          console.log(error);
+        }
+        setIsLoading(false);
       default:
         break;
     }
   };
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    console.log(userId);
+  }, []);
 
   if (isLoading) return <p>Loading...</p>;
 
@@ -93,7 +103,7 @@ export default function HomePage({ userId }: HomePageProps) {
             onChange={(e: any) => setTask(e.target.value)}
           />
           <button onClick={() => handleCreateOptions("add task")}>Add</button>
-          <button>Finish</button>
+          <button onClick={() => handleCreateOptions("finish")}>Finish</button>
         </>
       )}
     </main>

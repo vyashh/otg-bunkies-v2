@@ -1,6 +1,13 @@
 import { app, db } from "../../firebase";
-import { doc, getDoc } from "firebase/firestore";
-import { collection, query, where, getDocs } from "firebase/firestore";
+import {
+  collection,
+  query,
+  where,
+  getDocs,
+  addDoc,
+  setDoc,
+  doc,
+} from "firebase/firestore";
 // export default const schedule = () => {
 //   let people = ["Shi", "Vy", "Tjeerd", "Vera", "Kamil"];
 
@@ -65,4 +72,20 @@ export const getHouseData = async (userId: string) => {
   } else {
     return null; // No house found
   }
+};
+
+export const createHouse = async (
+  userId: string,
+  houseName: string,
+  tasks: string[]
+) => {
+  const newHouseRef = doc(collection(db, "houses"));
+
+  const data = {
+    houseName: houseName || null,
+    members: [userId || null],
+    tasks: tasks,
+  };
+
+  await setDoc(newHouseRef, data).then((res?) => console.log(newHouseRef.id));
 };

@@ -49,7 +49,7 @@ export default function HomePage({ email, userId }: HomePageProps) {
   }, [userId]);
 
   if (isLoading) return <p>Loading...</p>;
-  if (!data) redirect("/onboarding");
+  if (!data) router.push(`/onboarding?userId=${userId}`);
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center p-24">
