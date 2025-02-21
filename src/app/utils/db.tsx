@@ -8,7 +8,8 @@ import {
   setDoc,
   doc,
 } from "firebase/firestore";
-// export default const schedule = () => {
+
+// export const schedule = () => {
 //   let people = ["Shi", "Vy", "Tjeerd", "Vera", "Kamil"];
 
 //   function getScheduleForWeek(year: number, week: number) {
@@ -84,8 +85,23 @@ export const createHouse = async (
   const data = {
     houseName: houseName || null,
     members: [userId || null],
-    tasks: tasks,
   };
 
-  await setDoc(newHouseRef, data).then((res?) => console.log(newHouseRef.id));
+  await setDoc(newHouseRef, data).then((res?) => {
+    tasks.forEach((task) => {
+      createTask(newHouseRef.id, task);
+    });
+  });
+};
+
+export const createTask = async (houseId: string, task: string) => {
+  const newTaskRef = doc(collection(db, "houses", houseId, "tasks"));
+
+  const data = {
+    taskName: task,
+  };
+
+  await setDoc(newTaskRef, data).then((res) => {
+    console.log(newTaskRef.id);
+  });
 };
