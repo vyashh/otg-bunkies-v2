@@ -22,7 +22,7 @@ export default function HomePage({ userId }: HomePageProps) {
   const [showCreateTasksMenu, setShowCreateTasksMenu] =
     useState<boolean>(false);
   const [task, setTask] = useState<string>(""); // single task before adding them to the array
-  const [tasks, setTasks] = useState<string[] | null>([""]);
+  const [tasks, setTasks] = useState<string[] | null>([]);
 
   const handleOptions = (chosenOption: string) => {
     chosenOption == "join" && setShowJoinMenu(true);
